@@ -1,10 +1,7 @@
 import random
 from subprocess import call
 
-CELLS = [(0, 0), (0, 1), (0, 2)
-       , (1, 0), (1, 1), (1, 2)
-       , (2, 0), (2, 1), (2, 2)]
-
+# Function Definitions
 def get_starting_positions(cells):
     player_start = random.choice(cells)
     door_placement = random.choice(cells)
@@ -90,12 +87,19 @@ def move_piece(direction, piece_position):
 def move_monster(valid_directions, monster_position):
     return move_piece(random.choice(valid_directions), monster_position)
 
+# Initialization
+CELLS = [(0, 0), (0, 1), (0, 2)
+       , (1, 0), (1, 1), (1, 2)
+       , (2, 0), (2, 1), (2, 2)]
+
 player, door, monster = get_starting_positions(CELLS)
 
 call(['clear'])
+
 print("Welcome to the dungeon! Try to move your player (P) to the door (D) before the monster (M) catches you\n" +
     "Type 'quit' to quit game. Otherwise try your luck with 'left', 'right', 'up', and 'down'; Good Luck!")
 
+# Game Loop
 while True:
     print("Here's what the current situation is:\n{}".format(show_current_grid((player, door, monster), CELLS)))
     print("Here are your valid movement commands: {}".format(', '.join(valid_moves(player)).upper()))
@@ -109,10 +113,10 @@ while True:
         monster = move_monster(valid_monster_moves(monster, door), monster)
         if player == door:
             print("You made it out alive, this time. You Win!")
-            break;
+            break
         if player == monster:
             print("The monster ate your flesh. You Lose!")
-            break;
+            break
         continue
     else:
         print("Invalid command!")
